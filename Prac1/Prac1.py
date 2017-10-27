@@ -1,94 +1,7 @@
-import pygame, random
-
-class Escenario:
-
-    Dimensiones = (750,900)
-    Pantalla = pygame.display.set_mode(Dimensiones)
-    World = []
-
-    def __init__(self,viewX, viewY):
-        self.Dimensiones = (viewX*50, viewY*50)
-        Pantalla = pygame.display.set_mode(self.Dimensiones)
-        pygame.draw.rect(Pantalla, (255, 0, 255), [0,0,50,50], 0)
-
-    def repaintCharacter(self, X, Y, color):
-        pygame.draw.rect(self.Pantalla, color, [X,Y,50,50], 0)
-
-    def getDimensiones(self):
-        return self.Dimensiones
-
-    def paintWorld(self, contenido):
-        self.World = contenido
-        VERDE = (0, 255, 0)
-        AZUL = (0, 0, 255)
-        X = 0
-        Y = 0
-        for line in contenido:
-            for car in line:
-                if car == '0':
-                    pygame.draw.rect(self.Pantalla, AZUL, [X,Y,50,50], 0)
-                elif car == '1':
-                    pygame.draw.rect(self.Pantalla, VERDE, [X,Y,50,50], 0)
-                X = X + 50
-            Y = Y + 50
-            X = 0
-
-    def askUP(self,charX,charY):
-        return self.World[charY-1][charX]
-
-    def askDOWN(self,charX,charY):
-        return self.World[charY+1][charX]
-
-    def askLEFT(self,charX,charY):
-        return self.World[charY][charX-1]
-
-    def askRIGHT(self,charX,charY):
-        return self.World[charY][charX+1]
-
-class Archivo:
-
-    def read(self, ruta):
-        with open(ruta, 'r') as leer:
-            contenido = leer.read().split('\n')
-        i = 0
-        for line in contenido:
-            contenido[i] = line.split(',')
-            i = i + 1
-        return contenido
-
-class Character:
-
-    tipo = "Monito"
-    distancia = 0
-    costo = 0
-    X = 0
-    Y = 0
-
-    def __init__(self, tipo, X, Y):
-        self.tipo = tipo
-        self.X = X
-        self.Y = Y
-
-    @property
-    def getX(self):
-        return self.X
-
-    @property
-    def getY(self):
-        return self.Y
-
-    def UP(self):
-        self.Y = self.Y-50
-
-    def DOWN(self):
-        self.Y = self.Y+50
-
-    def RIGHT(self):
-        self.X = self.X+50
-
-    def LEFT(self):
-        self.X = self.X-50
-
+import pygame
+from Archivo import *
+from Escenario import *
+from Character import *
 
 texto = Archivo()
 contenido = texto.read('labyrint0.txt')
@@ -100,7 +13,9 @@ pygame.init()
 Terminar = False
 reloj = pygame.time.Clock()
 view = Escenario(viewX, viewY)
-view.paintWorld(contenido)
+view.paintWorld(contenido, 1)
+view.copyWorld(viewX, viewY)
+view.paintWorld(view.getSombra(), 0)
 monito = Character("Humano",0,0)
 while not Terminar:
     #---Manejo de eventos
@@ -125,7 +40,7 @@ while not Terminar:
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
             monito.LEFT()
     #--Todos los dibujos van despues de esta linea
-
+    view.paintWorld(view.getSombra(), 0)
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
     #--Todos los dibujos van antes de esta linea
     pygame.display.flip()
