@@ -1,4 +1,5 @@
 import pygame
+from Archivo import *
 class Escenario:
 
     Dimensiones = (750,900)
@@ -73,3 +74,11 @@ class Escenario:
 
     def askRIGHT(self,charX,charY):
         return self.World[charY][charX+1]
+
+    def CreateWorld(self, x, y):
+        for columna in y:
+            for fila in x:
+                if fila != x
+                    World = World + random.randrange(6)+','
+                else
+                    World = World + random.randrange(6)
