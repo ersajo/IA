@@ -124,7 +124,7 @@ costos = BD_Char.read('Characters.txt')
 viewY = len(contenido)-1
 viewX = len(contenido[0])
 NEGRO = (0, 0, 0)
-ROJO = (255, 0, 0)
+ROJO = (254, 0, 0)
 pygame.init()
 Terminar = False
 reloj = pygame.time.Clock()
