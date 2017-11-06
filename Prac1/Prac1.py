@@ -29,25 +29,25 @@ while not Terminar:
     if(pygame.key.get_pressed()[pygame.K_F3] != 0):
         break
     if(pygame.key.get_pressed()[pygame.K_UP] != 0):
-        if(monito.getY > 0 and view.askUP(monito.getX/50, monito.getY/50) == '1'):
+        if(monito.getY > 0 and view.askUP(monito.getX/50, monito.getY/50) <= '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
-            monito.UP(view.getPos())
+            monito.UP(view.askUP(monito.getX/50, monito.getY/50))
     if(pygame.key.get_pressed()[pygame.K_DOWN] != 0):
-        if(monito.getY+50 < view.getDimensiones()[1] and view.askDOWN(monito.getX/50, monito.getY/50) == '1'):
+        if(monito.getY+50 < view.getDimensiones()[1] and view.askDOWN(monito.getX/50, monito.getY/50) < '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
-            monito.DOWN(view.getPos())
+            monito.DOWN(view.askDOWN(monito.getX/50, monito.getY/50))
     if(pygame.key.get_pressed()[pygame.K_RIGHT] != 0):
-        if(monito.getX+50 < view.getDimensiones()[0] and view.askRIGHT(monito.getX/50, monito.getY/50) == '1'):
+        if(monito.getX+50 < view.getDimensiones()[0] and view.askRIGHT(monito.getX/50, monito.getY/50) < '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
-            monito.RIGHT(view.getPos())
+            monito.RIGHT(view.askRIGHT(monito.getX/50, monito.getY/50))
     if(pygame.key.get_pressed()[pygame.K_LEFT] != 0):
-        if(monito.getX > 0 and view.askLEFT(monito.getX/50, monito.getY/50) == '1'):
+        if(monito.getX > 0 and view.askLEFT(monito.getX/50, monito.getY/50) < '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
-            monito.LEFT(view.getPos())
+            monito.LEFT(view.askLEFT(monito.getX/50, monito.getY/50))
     #--Todos los dibujos van despues de esta linea
     view.paintWorld(view.getSombra(), 0)
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
     #--Todos los dibujos van antes de esta linea
     pygame.display.flip()
-    reloj.tick(20)  # Limitamos a 20 fotogramas por segundo
+    reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
 pygame.quit()

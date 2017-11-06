@@ -44,19 +44,28 @@ class Escenario:
             self.Sombra = contenido
         elif flag == 1:
             self.World = contenido
-        VERDE = (0, 255, 0)
-        AZUL = (0, 0, 255)
-        BLANCO = (255, 255, 255)
+        GRIS = (192, 192, 192)
+        MELON = (255, 255, 153)
+        AZUL = (0, 172, 230)
+        AMARILLO = (255, 204, 0)
+        VERDE = (46, 184, 46)
+        NEGRO = (0, 0, 0)
         X = 0
         Y = 0
         for line in contenido:
             for car in line:
                 if car == '0':
-                    pygame.draw.rect(self.Pantalla, AZUL, [X,Y,50,50], 0)
+                    pygame.draw.rect(self.Pantalla, GRIS, [X,Y,50,50], 0)
                 elif car == '1':
+                    pygame.draw.rect(self.Pantalla, MELON, [X,Y,50,50], 0)
+                elif car == '2':
+                    pygame.draw.rect(self.Pantalla, AZUL, [X,Y,50,50], 0)
+                elif car == '3':
+                    pygame.draw.rect(self.Pantalla, AMARILLO, [X,Y,50,50], 0)
+                elif car == '4':
                     pygame.draw.rect(self.Pantalla, VERDE, [X,Y,50,50], 0)
                 elif car == -1:
-                    pygame.draw.rect(self.Pantalla, BLANCO, [X,Y,50,50], 0)
+                    pygame.draw.rect(self.Pantalla, NEGRO, [X,Y,50,50], 0)
                 X = X + 50
             Y = Y + 50
             X = 0
@@ -69,18 +78,25 @@ class Escenario:
         Num = self.World[pos[1]/50][pos[0]/50]
         myfont = pygame.font.SysFont("monospace bold", 30)
         if Num == '0':
-            label = myfont.render("Azul", 1, (244,110,120))
-            self.Pantalla.blit(label, (pos[0], pos[1]))
-            print "Azul"
+            label = myfont.render("Mountain", 1, (244,110,120))
+            print "Mountain"
         elif Num == '1':
-            label = myfont.render("Rosadito", 1, (244,110,120))
-            self.Pantalla.blit(label, (pos[0], pos[1]))
-            print "Rosadito"
+            label = myfont.render("Earth", 1, (244,110,120))
+            print "Earth"
+        elif Num == '2':
+            label = myfont.render("Water", 1, (244,110,120))
+            print "Water"
+        elif Num == '3':
+            label = myfont.render("Sand", 1, (244,110,120))
+            print "Sand"
+        elif Num == '4':
+            label = myfont.render("Forest", 1, (244,110,120))
+            print "Forest"
+        self.Pantalla.blit(label, (pos[0], pos[1]))
         time.sleep(1)
 
-    def getPos(self):
-        p = pygame.mouse.get_pos()
-        return self.World[p[1]/50][p[0]/50]
+    def getPos(self,charX,charY):
+        return self.World[charY][charX]
 
     def askUP(self,charX,charY):
         return self.World[charY-1][charX]

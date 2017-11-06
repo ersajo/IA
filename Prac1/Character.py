@@ -28,18 +28,22 @@ class Character:
         if self.costos[int(mapa) + 1] != 'X':
             self.Y = self.Y-50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+        print self.costoT
 
     def DOWN(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.Y = self.Y+50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+        print self.costoT
 
     def RIGHT(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.X = self.X+50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+        print self.costoT
 
     def LEFT(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.X = self.X-50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+        print self.costoT
