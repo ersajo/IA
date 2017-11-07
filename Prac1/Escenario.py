@@ -1,5 +1,4 @@
-import pygame
-import time
+import pygame, time
 from Archivo import *
 class Escenario:
 
@@ -88,6 +87,18 @@ class Escenario:
         elif Num == '4':
             label = myfont.render("Forest", 1, (244,110,120))
         self.Pantalla.blit(label, (pos[0], pos[1]))
+
+    def changeTerrain(self):
+        pos = pygame.mouse.get_pos()
+        print "Type:"
+        print "0 -> Mountain"
+        print "1 -> Earth"
+        print "2 -> Water"
+        print "3 -> Sand"
+        print "4 -> Forest"
+        terreno  = raw_input ("Write the number of the terrain type >>")
+        self.World[pos[1]/50][pos[0]/50] = terreno
+        self.Sombra[pos[1]/50][pos[0]/50] = terreno
 
     def getPos(self,charX,charY):
         return self.World[charY][charX]

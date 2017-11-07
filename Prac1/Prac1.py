@@ -24,6 +24,9 @@ while not Terminar:
        if Evento.type == pygame.QUIT:
             Terminar = True
     #---La logica del juego
+    if(pygame.mouse.get_pressed()[2] != 0):
+        view.changeTerrain()
+        view.paintWorld(contenido, 1)
     if(pygame.key.get_pressed()[pygame.K_F3] != 0):
         break
     if(pygame.key.get_pressed()[pygame.K_UP] != 0):
