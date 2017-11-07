@@ -24,6 +24,16 @@ class Character:
     def getY(self):
         return self.Y
 
+    @property
+    def getCostoT(self):
+        return self.costoT
+
+    def X(self, X):
+        self.X = X
+
+    def Y(self, Y):
+        self.Y = Y
+
     def UP(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.Y = self.Y-50
