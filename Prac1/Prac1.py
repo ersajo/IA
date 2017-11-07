@@ -50,7 +50,7 @@ while not Terminar:
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
     if(pygame.mouse.get_pressed()[0] != 0):
         view.askTerrain()
-    #--Todos los dibujos van antes de esta linea
+    #--Todos los dibujos van antes de esta linea --
     pygame.display.flip()
     reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
 pygame.quit()
