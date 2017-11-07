@@ -1,6 +1,7 @@
 from Escenario import *
 from Archivo import *
 from Character import *
+from Arbol import *
 
 texto = Archivo()
 contenido = texto.read('labyrint0.txt')
