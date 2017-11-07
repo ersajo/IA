@@ -79,21 +79,15 @@ class Escenario:
         myfont = pygame.font.SysFont("monospace bold", 30)
         if Num == '0':
             label = myfont.render("Mountain", 1, (244,110,120))
-            print "Mountain"
         elif Num == '1':
             label = myfont.render("Earth", 1, (244,110,120))
-            print "Earth"
         elif Num == '2':
             label = myfont.render("Water", 1, (244,110,120))
-            print "Water"
         elif Num == '3':
             label = myfont.render("Sand", 1, (244,110,120))
-            print "Sand"
         elif Num == '4':
             label = myfont.render("Forest", 1, (244,110,120))
-            print "Forest"
         self.Pantalla.blit(label, (pos[0], pos[1]))
-        time.sleep(1)
 
     def getPos(self,charX,charY):
         return self.World[charY][charX]

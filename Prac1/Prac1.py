@@ -17,15 +17,13 @@ view = Escenario(viewX, viewY)
 view.paintWorld(contenido, 1)
 view.copyWorld(viewX, viewY)
 view.paintWorld(view.getSombra(), 0)
-monito = Character("Sasquatch",0,0,costos)
+monito = Character("Human",0,0,costos)
 while not Terminar:
     #---Manejo de eventos
     for Evento in pygame.event.get():
        if Evento.type == pygame.QUIT:
             Terminar = True
     #---La logica del juego
-    if(pygame.key.get_pressed()[pygame.K_F12] != 0):
-        view.askTerrain()
     if(pygame.key.get_pressed()[pygame.K_F3] != 0):
         break
     if(pygame.key.get_pressed()[pygame.K_UP] != 0):
@@ -47,6 +45,8 @@ while not Terminar:
     #--Todos los dibujos van despues de esta linea
     view.paintWorld(view.getSombra(), 0)
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
+    if(pygame.mouse.get_pressed()[0] != 0):
+        view.askTerrain()
     #--Todos los dibujos van antes de esta linea
     pygame.display.flip()
     reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
