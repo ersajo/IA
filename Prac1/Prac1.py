@@ -104,8 +104,11 @@ while not Terminar:
 
     view.paintWorld(view.getSombra(), 0)
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
-
-    print "mi coordenada actual ->" +str(monito.getX/50)+","+str(monito.getY/50)+ " mi coordenada anterior ->" +str(PosCharlast[0])+","+str(PosCharlast[1])+"  Status-> "+str(view.getSombra()[monito.getX/50][monito.getY/50])
+    
+    if(pygame.mouse.get_pressed()[0] != 0):
+        view.askTerrain()
+        
+    #print "mi coordenada actual ->" +str(monito.getX/50)+","+str(monito.getY/50)+ " mi coordenada anterior ->" +str(PosCharlast[0])+","+str(PosCharlast[1])+"  Status-> "+str(view.getSombra()[monito.getX/50][monito.getY/50])
     #--Todos los dibujos van antes de esta linea
     pygame.display.flip()
     reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
