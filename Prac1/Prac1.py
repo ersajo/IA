@@ -26,7 +26,7 @@ view.paintWorld(view.getSombra(), 0)
 PosChar[0] = (random.randrange(viewX-1))*50
 PosChar[1] = (random.randrange(viewY-1))*50
 
-monito = Character("Sasquatch",PosChar[0],PosChar[1],costos)
+monito = Character("Human",PosChar[0],PosChar[1],costos)
 
 #--view.printArreglo()
 
@@ -47,41 +47,41 @@ while not Terminar:
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
             PosCharlast[0]=monito.getX/50
             PosCharlast[1]=monito.getY/50
-            monito.UP(view.askUP(monito.getX/50, monito.getY/50))
+            monito.UP(view.askUP(monito.getX/50, monito.getY/50),1)
 
     if(pygame.key.get_pressed()[pygame.K_DOWN] != 0):
         if(monito.getY+50 < view.getDimensiones()[1] and view.askDOWN(monito.getX/50, monito.getY/50) < '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
             PosCharlast[0]=monito.getX/50
             PosCharlast[1]=monito.getY/50
-            monito.DOWN(view.askDOWN(monito.getX/50, monito.getY/50))
+            monito.DOWN(view.askDOWN(monito.getX/50, monito.getY/50),1)
 
     if(pygame.key.get_pressed()[pygame.K_RIGHT] != 0):
         if(monito.getX+50 < view.getDimensiones()[0] and view.askRIGHT(monito.getX/50, monito.getY/50) < '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
             PosCharlast[0]=monito.getX/50
             PosCharlast[1]=monito.getY/50
-            monito.RIGHT(view.askRIGHT(monito.getX/50, monito.getY/50))
+            monito.RIGHT(view.askRIGHT(monito.getX/50, monito.getY/50),1)
 
     if(pygame.key.get_pressed()[pygame.K_LEFT] != 0):
         if(monito.getX > 0 and view.askLEFT(monito.getX/50, monito.getY/50) < '5'):
             view.repaintCharacter(monito.getX, monito.getY,NEGRO)
             PosCharlast[0]=monito.getX/50
             PosCharlast[1]=monito.getY/50
-            monito.LEFT(view.askLEFT(monito.getX/50, monito.getY/50))
+            monito.LEFT(view.askLEFT(monito.getX/50, monito.getY/50),1)
 
 
 
     s =view.getSombra()[monito.getX/50][monito.getY/50][0]
 
     Desicion=0;
-    if(view.askLEFT(monito.getX/50, monito.getY/50)):
+    if(monito.getY > 0 and monito.UP(view.askUP(monito.getX/50, monito.getY/50), 0) == 0):
         Desicion=Desicion+1
-    if(view.askRIGHT(monito.getX/50, monito.getY/50)):
+    if(monito.getY+50 < view.getDimensiones()[1] and monito.DOWN(view.askDOWN(monito.getX/50, monito.getY/50), 0) == 0):
         Desicion=Desicion+1
-    if(view.askDOWN(monito.getX/50, monito.getY/50)):
+    if(monito.getX+50 < view.getDimensiones()[0] and monito.RIGHT(view.askRIGHT(monito.getX/50, monito.getY/50), 0) == 0):
         Desicion=Desicion+1
-    if(view.askUP(monito.getX/50, monito.getY/50)):
+    if(monito.getX > 0 and monito.LEFT(view.askLEFT(monito.getX/50, monito.getY/50), 0) == 0):
         Desicion=Desicion+1
 
     v="v"
@@ -93,7 +93,7 @@ while not Terminar:
     view.getSombra()[PosCharlast[0]][PosCharlast[1]][3]=0
     a="a";
 
-    if(Desicion>=2):
+    if(Desicion>2):
         d="d"
     else:
         d="0"
@@ -105,12 +105,7 @@ while not Terminar:
     view.paintWorld(view.getSombra(), 0)
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
 
-    if (press==1):
-        PosCharlast[0]=monito.getX/50
-        PosCharlast[1]=monito.getY/50
-        press=0
-
-    #print "mi coordenada actual ->" +str(monito.getX/50)+","+str(monito.getY/50)+ " mi coordenada anterior ->" +str(PosCharlast[0])+","+str(PosCharlast[1])+"  Status-> "+str(view.getSombra()[monito.getX/50][monito.getY/50])
+    print "mi coordenada actual ->" +str(monito.getX/50)+","+str(monito.getY/50)+ " mi coordenada anterior ->" +str(PosCharlast[0])+","+str(PosCharlast[1])+"  Status-> "+str(view.getSombra()[monito.getX/50][monito.getY/50])
     #--Todos los dibujos van antes de esta linea
     pygame.display.flip()
     reloj.tick(10)  # Limitamos a 20 fotogramas por segundo

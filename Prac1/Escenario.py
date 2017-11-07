@@ -112,7 +112,6 @@ class Escenario:
         return self.World[charY-1][charX]
 
     def askDOWN(self,charX,charY):
-        print charY+1
         return self.World[charY+1][charX]
 
     def askLEFT(self,charX,charY):
