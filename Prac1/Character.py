@@ -24,26 +24,34 @@ class Character:
     def getY(self):
         return self.Y
 
+    @property
+    def getCostoT(self):
+        return self.costoT
+
+    def X(self, X):
+        self.X = X
+
+    def Y(self, Y):
+        self.Y = Y
+
     def UP(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.Y = self.Y-50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
-        print self.costoT
+
 
     def DOWN(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.Y = self.Y+50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
-        print self.costoT
 
     def RIGHT(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.X = self.X+50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
-        print self.costoT
+
 
     def LEFT(self, mapa):
         if self.costos[int(mapa) + 1] != 'X':
             self.X = self.X-50
             self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
-        print self.costoT

@@ -15,25 +15,26 @@ class Escenario:
 
     def repaintCharacter(self, X, Y, color):
         pygame.draw.rect(self.Pantalla, color, [X,Y,50,50], 0)
-        self.Sombra[Y/50][X/50] = self.World[Y/50][X/50]
+        self.Sombra[Y/50][X/50][0] = self.World[Y/50][X/50]
+
 
         if (X/50 != 0):
-            self.Sombra[Y/50][(X/50)-1] = self.World[Y/50][(X/50)-1]
+            self.Sombra[Y/50][(X/50)-1][0] = self.World[Y/50][(X/50)-1]
 
         if (Y/50 != 0):
-            self.Sombra[(Y/50)-1][X/50] = self.World[(Y/50)-1][X/50]
+            self.Sombra[(Y/50)-1][X/50][0] = self.World[(Y/50)-1][X/50]
 
         if ((X/50)+1 < self.Dimensiones[0]/50):
-            self.Sombra[Y/50][(X/50)+1] = self.World[Y/50][(X/50)+1]
+            self.Sombra[Y/50][(X/50)+1][0] = self.World[Y/50][(X/50)+1]
 
         if ((Y/50)+1 < self.Dimensiones[1]/50):
-            self.Sombra[(Y/50)+1][X/50] = self.World[(Y/50)+1][X/50]
+            self.Sombra[(Y/50)+1][X/50][0] = self.World[(Y/50)+1][X/50]
 
     def getDimensiones(self):
         return self.Dimensiones
 
     def copyWorld(self, viewX, viewY):
-        self.Sombra = [[-1 for j in range(viewX)] for i in range(viewY)]
+        self.Sombra = [[ [-1,0,0,0,0] for j in range(viewX)] for i in range(viewY)]
 
     def printArreglo(self):
         print self.World
@@ -42,8 +43,9 @@ class Escenario:
     def paintWorld(self, contenido, flag):
         if flag == 0:
             self.Sombra = contenido
-        elif flag == 1:
+        if flag == 1:
             self.World = contenido
+
         GRIS = (192, 192, 192)
         MELON = (255, 255, 153)
         AZUL = (0, 172, 230)
@@ -54,6 +56,9 @@ class Escenario:
         Y = 0
         for line in contenido:
             for car in line:
+                if flag == 0:
+                    car = car[0]
+
                 if car == '0':
                     pygame.draw.rect(self.Pantalla, GRIS, [X,Y,50,50], 0)
                 elif car == '1':
@@ -102,6 +107,7 @@ class Escenario:
         return self.World[charY-1][charX]
 
     def askDOWN(self,charX,charY):
+        print charY+1
         return self.World[charY+1][charX]
 
     def askLEFT(self,charX,charY):
