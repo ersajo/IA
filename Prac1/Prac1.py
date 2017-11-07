@@ -11,7 +11,6 @@ viewY = len(contenido)-1
 viewX = len(contenido[0])
 PosChar = [0,0]
 PosCharlast = [0,0]
-press = 0
 NEGRO = (0, 0, 0)
 ROJO = (255, 0, 0)
 pygame.init()
@@ -20,7 +19,6 @@ reloj = pygame.time.Clock()
 view = Escenario(viewX, viewY)
 view.paintWorld(contenido, 1)
 view.copyWorld(viewX, viewY)
-#--print "Dimension Escenario"+str(viewX)+","+str(viewY)
 view.paintWorld(view.getSombra(), 0)
 
 PosChar[0] = (random.randrange(viewX-1))*50
@@ -28,16 +26,15 @@ PosChar[1] = (random.randrange(viewY-1))*50
 
 monito = Character("Human",PosChar[0],PosChar[1],costos)
 
-#--view.printArreglo()
-
 while not Terminar:
     #---Manejo de eventos
     for Evento in pygame.event.get():
        if Evento.type == pygame.QUIT:
             Terminar = True
     #---La logica del juego
-    if(pygame.key.get_pressed()[pygame.K_F12] != 0):
-        view.askTerrain()
+    if(pygame.mouse.get_pressed()[2] != 0):
+        view.changeTerrain()
+        view.paintWorld(contenido, 1)
 
     if(pygame.key.get_pressed()[pygame.K_F3] != 0):
         break
@@ -104,9 +101,12 @@ while not Terminar:
 
     view.paintWorld(view.getSombra(), 0)
     view.repaintCharacter(monito.getX, monito.getY, ROJO)
+
     if(pygame.mouse.get_pressed()[0] != 0):
         view.askTerrain()
-    #--Todos los dibujos van antes de esta linea --
+
+    print "mi coordenada actual ->" +str(monito.getX/50)+","+str(monito.getY/50)+ " mi coordenada anterior ->" +str(PosCharlast[0])+","+str(PosCharlast[1])+"  Status-> "+str(view.getSombra()[monito.getX/50][monito.getY/50])
+    #--Todos los dibujos van antes de esta linea
     pygame.display.flip()
     reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
 pygame.quit()
