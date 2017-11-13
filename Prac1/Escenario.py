@@ -16,7 +16,6 @@ class Escenario:
         pygame.draw.rect(self.Pantalla, color, [X,Y,50,50], 0)
         self.Sombra[Y/50][X/50][0] = self.World[Y/50][X/50]
 
-
         if (X/50 != 0):
             self.Sombra[Y/50][(X/50)-1][0] = self.World[Y/50][(X/50)-1]
 
@@ -51,6 +50,7 @@ class Escenario:
         AMARILLO = (255, 204, 0)
         VERDE = (46, 184, 46)
         NEGRO = (0, 0, 0)
+        DEFAULT = (243, 123, 173)
         X = 0
         Y = 0
         for line in contenido:
@@ -70,6 +70,8 @@ class Escenario:
                     pygame.draw.rect(self.Pantalla, VERDE, [X,Y,50,50], 0)
                 elif car == -1:
                     pygame.draw.rect(self.Pantalla, NEGRO, [X,Y,50,50], 0)
+                else:
+                    pygame.draw.rect(self.Pantalla, DEFAULT, [X,Y,50,50], 0)
                 X = X + 50
             Y = Y + 50
             X = 0
@@ -77,10 +79,36 @@ class Escenario:
     def getSombra(self):
         return self.Sombra
 
+    def getWorld(self):
+        return self.World
+
+    def printSombra(self):
+        i = 0
+        for x in self.Sombra:
+            print "Sombra[{0}]-> \t{1}".format(i,self.Sombra[i])
+            i = i+1
+
+    def printWorld(self):
+        i = 0
+        for x in self.World:
+            print "World[{0}]-> \t{1}".format(i,self.World[i])
+            i = i+1
+
+    def displayInfo(self, cadena):
+        pos = pygame.mouse.get_pos()
+        myfont = pygame.font.SysFont("monospace bold", 16)
+        label = myfont.render(str(cadena), 1, (255,0,255))
+        self.Pantalla.blit(label, (pos[0]+5, pos[1]-10))
+
+    def getNowCha(self,x,y):
+        return self.World[x][y]
+
+
     def askTerrain(self):
         pos = pygame.mouse.get_pos()
         Num = self.World[pos[1]/50][pos[0]/50]
         myfont = pygame.font.SysFont("monospace bold", 30)
+
         if Num == '0':
             label = myfont.render("Mountain", 1, (244,110,120))
         elif Num == '1':
@@ -91,34 +119,55 @@ class Escenario:
             label = myfont.render("Sand", 1, (244,110,120))
         elif Num == '4':
             label = myfont.render("Forest", 1, (244,110,120))
+        else:
+            label = myfont.render("Default", 1, (244,110,120))
         self.Pantalla.blit(label, (pos[0], pos[1]))
 
     def changeTerrain(self):
         pos = pygame.mouse.get_pos()
-        print "Type:"
-        print "0 -> Mountain"
-        print "1 -> Earth"
-        print "2 -> Water"
-        print "3 -> Sand"
-        print "4 -> Forest"
-        terreno  = raw_input ("Write the number of the terrain type >>")
+        while True:
+            print "Type:"
+            print "0 -> Mountain"
+            print "1 -> Earth"
+            print "2 -> Water"
+            print "3 -> Sand"
+            print "4 -> Forest"
+            terreno  = raw_input ("Write the number of the terrain type >>")
+            if terreno < "5" and terreno >= "0":
+                break
         self.World[pos[1]/50][pos[0]/50] = terreno
-        self.Sombra[pos[1]/50][pos[0]/50] = terreno
+        self.Sombra[pos[1]/50][pos[0]/50][0] = terreno
 
     def getPos(self,charX,charY):
         return self.World[charY][charX]
 
     def askUP(self,charX,charY):
-        return self.World[charY-1][charX]
+        if (charY - 1) >= 0:
+            if(self.World[charY-1][charX] != 0):
+                return self.World[charY-1][charX]
+        else:
+            return False
 
     def askDOWN(self,charX,charY):
-        return self.World[charY+1][charX]
+        if (charY + 1) != (self.Dimensiones[1]/50):
+            if(self.World[charY+1][charX] != 0):
+                return self.World[charY+1][charX]
+        else:
+            return False
 
     def askLEFT(self,charX,charY):
-        return self.World[charY][charX-1]
+        if (charX - 1) >= 0:
+            if(self.World[charY][charX-1] != 0):
+                return self.World[charY][charX-1]
+        else:
+            return False
 
     def askRIGHT(self,charX,charY):
-        return self.World[charY][charX+1]
+        if (charX + 1) != (self.Dimensiones[0]/50):
+            if(self.World[charY][charX+1] != 0):
+                return self.World[charY][charX+1]
+        else:
+            return False
 
     def CreateWorld(self, x, y):
         for columna in y:

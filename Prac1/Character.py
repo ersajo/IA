@@ -28,12 +28,6 @@ class Character:
     def getCostoT(self):
         return self.costoT
 
-    def X(self, X):
-        self.X = X
-
-    def Y(self, Y):
-        self.Y = Y
-
     def askMove(self, mapa):
         return self.costos[int(mapa) + 1]
 
