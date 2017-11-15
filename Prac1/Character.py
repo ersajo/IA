@@ -24,22 +24,45 @@ class Character:
     def getY(self):
         return self.Y
 
-    def UP(self, mapa):
-        if self.costos[int(mapa) + 1] != 'X':
-            self.Y = self.Y-50
-            self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+    @property
+    def getCostoT(self):
+        return self.costoT
 
-    def DOWN(self, mapa):
-        if self.costos[int(mapa) + 1] != 'X':
-            self.Y = self.Y+50
-            self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+    def askMove(self, mapa):
+        return self.costos[int(mapa) + 1]
 
-    def RIGHT(self, mapa):
+    def UP(self, mapa, flag):
         if self.costos[int(mapa) + 1] != 'X':
-            self.X = self.X+50
-            self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+            if flag == 1:
+                self.Y = self.Y-50
+                self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+            elif flag == 0:
+                return 0
+        return 1
 
-    def LEFT(self, mapa):
+    def DOWN(self, mapa, flag):
         if self.costos[int(mapa) + 1] != 'X':
-            self.X = self.X-50
-            self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+            if flag == 1:
+                self.Y = self.Y+50
+                self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+            elif flag == 0:
+                return 0
+        return 1
+
+    def RIGHT(self, mapa, flag):
+        if self.costos[int(mapa) + 1] != 'X':
+            if flag == 1:
+                self.X = self.X+50
+                self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+            elif flag == 0:
+                return 0
+        return 1
+
+    def LEFT(self, mapa, flag):
+        if self.costos[int(mapa) + 1] != 'X':
+            if flag == 1:
+                self.X = self.X-50
+                self.costoT = self.costoT + int(self.costos[int(mapa) + 1])
+            elif flag == 0:
+                return 0
+        return 1
