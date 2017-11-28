@@ -144,30 +144,30 @@ class Escenario:
     def askUP(self,charX,charY):
         if (charY - 1) >= 0:
             if(self.World[charY-1][charX] != 0):
-                return self.World[charY-1][charX]
-        else:
-            return False
+                if(self.Sombra[charY-1][charX][2] != 'v'):
+                    return self.World[charY-1][charX]
+        return False
 
     def askDOWN(self,charX,charY):
         if (charY + 1) != (self.Dimensiones[1]/50):
             if(self.World[charY+1][charX] != 0):
-                return self.World[charY+1][charX]
-        else:
-            return False
+                if(self.Sombra[charY+1][charX][2]!= 'v'):
+                    return self.World[charY+1][charX]
+        return False
 
     def askLEFT(self,charX,charY):
         if (charX - 1) >= 0:
             if(self.World[charY][charX-1] != 0):
-                return self.World[charY][charX-1]
-        else:
-            return False
+                if(self.Sombra[charY][charX-1][2] != 'v'):
+                    return self.World[charY][charX-1]
+        return False
 
     def askRIGHT(self,charX,charY):
         if (charX + 1) != (self.Dimensiones[0]/50):
             if(self.World[charY][charX+1] != 0):
-                return self.World[charY][charX+1]
-        else:
-            return False
+                if(self.Sombra[charY][charX+1][2] != 'v'):
+                    return self.World[charY][charX+1]
+        return False
 
     def CreateWorld(self, x, y):
         for columna in y:

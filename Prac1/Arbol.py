@@ -6,8 +6,16 @@ class Arbol:
         self.elemento = elemento
 
     def agregarElemento(self, arbol, elemento, elementoPadre):
-        subarbol = self.buscarSubarbol(arbol, elementoPadre);
+        subarbol = self.buscarSubarbol(arbol, elementoPadre)
         subarbol.hijos.append(Arbol(elemento))
+
+    def removeElemento(self, arbol, elemento, elementoPadre):
+        subarbol = self.buscarSubarbol(arbol, elementoPadre)
+        subarbol.hijos.pop(2)
+
+    def modificarElemento(self, arbol, elemento, elementoPadre):
+        subarbol = self.buscarSubarbol(arbol, elementoPadre)
+        subarbol.elemento = elemento
 
     def printElement(self, element):
         print element
