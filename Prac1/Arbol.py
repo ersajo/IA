@@ -4,6 +4,7 @@ class Arbol:
     def __init__(self, elemento):
         self.hijos = []
         self.elemento = elemento
+        self.padre =padre
 
     def agregarElemento(self, arbol, elemento, elementoPadre):
         subarbol = self.buscarSubarbol(arbol, elementoPadre)

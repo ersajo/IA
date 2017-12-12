@@ -1,3 +1,4 @@
+from Arbol import *
 class Character:
 
     tipo = ""
@@ -6,14 +7,13 @@ class Character:
     costoT = 0
     X = 0
     Y = 0
-    Arbol =Arbol("0,0")
-
+    Tree=Arbol("0,0")
 
     def __init__(self, tipo, X, Y, costos):
         self.tipo = tipo
         self.X = X
         self.Y = Y
-        arbol=Arbol(str(X)+","+str(Y))
+        Tree=Arbol(str(self.X)+","+str(self.Y))
         for i in range(len(costos)):
             if costos[i][0] == tipo:
                 self.costos = costos[i]
@@ -78,4 +78,32 @@ class Character:
                     return 0
             return 1
 
-    def choice(self):
+    def askfor(self,p1,p2,p3,p4,view):
+        op=0
+        #-----------------------------------------------------------------------
+        for opc in range (1,4)
+            if(opc==1):
+                op=p1
+            if(opc==2):
+                op=p2
+            if(opc==3):
+                op=p3
+            if(opc==4):
+                op=p4
+            #-------------------------------------------------------------------
+            if(op==1):
+                if(view.askLEFT(self.getX/50, self.getY/50) > "0"):
+                    return "left"
+            if(op==2):
+                if(view.askUP(self.getX/50, self.getY/50) > "0"):
+                    return "up"
+            if(op==3):
+                if(view.askRIGHT(self.getX/50, self.getY/50) > "0"):
+                    return "right"
+            if(op==4):
+                if(view.askDOWN(self.getX/50, self.getY/50) > "0"):
+                    return "down"
+            return "false"
+
+
+    #def choice(self):
