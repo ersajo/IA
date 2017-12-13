@@ -5,7 +5,7 @@ class GUI:
 
     def __init__(self):
         self.master = Tk()
-        self.master.geometry('500x200')
+        self.master.geometry('400x170')
         self.master.title("Algoritmos Geneticos")
 
         MODES = [
@@ -49,16 +49,17 @@ class GUI:
         self.intervaloMax.grid(column=8, row=3)
 
     def ejecutar(self):
+        mutation = np.random.randint(1, high=int(self.generaciones.get()))
         i = int(self.individuos.get())
         imin = int(self.intervaloMin.get())
         imax = int(self.intervaloMax.get())
         g = Genetico(i, imin, imax)
-        indices = g.eval(self.var.get(),self.variable.get(), 0)
-        g.cross(indices, i, 0)
         for j in range(int(self.generaciones.get()) + 1):
+            if j == mutation:
+                g.mutation(mutation)
             indices = g.eval(self.var.get(), self.variable.get(), j)
-            g.cross(indices, i, j)
-            print(g.getIndividuos(j))
+            g.cross(indices, i, j, self.variable.get())
+            print("G{}: {}".format(j,g.getIndividuos(j)))
         g.plot(self.var.get(),int(self.generaciones.get()))
         print("")
 

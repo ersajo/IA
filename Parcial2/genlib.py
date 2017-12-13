@@ -12,7 +12,8 @@ Cruzamiento:        Se transformara el valor xi en una cadena binaria representa
                     se introduce "sangre nueva"
 Mutacion:           Se realizara una mutacion en un bit aleatorio en un generacion aleatoria dentro de las establecidas
                     por el usuario, donde el bit seleccionado sera seteado a su inverso
-Restricciones:      Los individuos en cada generacion tienen que estar dentro del intervalo X 
+Restricciones:      *Los individuos en cada generacion tienen que estar dentro del intervalo X 
+                    *Si se detecta una division por 0 se introduce sangre nueva
 """
 
 class Genetico:
@@ -118,7 +119,7 @@ class Genetico:
             i = i + 1
         return out
 
-    def cross(self, survivors, tamaño, gen):
+    def cross(self, survivors, tamaño, gen, obj):
         rand = np.random.randint(3, high=len(bin(self.max)))
         individuos = []
         for val in survivors:
@@ -139,7 +140,9 @@ class Genetico:
                 hijos.append(children1)
                 hijos.append(children2)
         for hijo in hijos:
-            if int(hijo, 2) > self.max:
+            if int(hijo, 2) > self.max and obj == 1:
+                pass
+            elif int(hijo, 2) < self.min and obj == 0:
                 pass
             else:
                 individuos.append(int(hijo,2))
@@ -150,5 +153,21 @@ class Genetico:
                 individuos.pop(len(individuos)-1)
         self.generacion.append(individuos)
 
-    def mutation(self):
-        print("")
+    def mutation(self, indice):
+        individuos = self.generacion[indice]
+        rInd = np.random.randint(len(individuos))
+        choosen = self.generacion[indice][rInd]
+        choosen = bin(choosen)
+        if len(choosen) != len(bin(self.max)):
+            choosen = choosen[:2] + '0' * (len(bin(self.max)) - len(choosen)) + choosen[2:]
+        rBit = np.random.randint(3,high=len(choosen))
+        if choosen[rBit] == '0':
+            choosen = choosen[:rBit] + '1' + choosen[rBit+1:]
+        elif choosen[rBit] == '1':
+            choosen = choosen[:rBit] + '0' + choosen[rBit+1:]
+        if int(choosen,2) > self.max:
+            choosen = bin(self.max)
+        if int(choosen,2) < self.min:
+            choosen = bin(self.min)
+        print(int(choosen,2),rInd)
+        self.generacion[indice][rInd] = int(choosen,2)
