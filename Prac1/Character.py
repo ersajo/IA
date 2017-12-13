@@ -7,17 +7,23 @@ class Character:
     costoT = 0
     X = 0
     Y = 0
-    Tree=Arbol("0,0")
+    Tree=Arbol("0,0","0,0")
 
     def __init__(self, tipo, X, Y, costos):
         self.tipo = tipo
         self.X = X
         self.Y = Y
-        Tree=Arbol(str(self.X)+","+str(self.Y))
+        Tree=Arbol(str(X)+","+str(Y),str(X)+","+str(Y))
         for i in range(len(costos)):
             if costos[i][0] == tipo:
                 self.costos = costos[i]
                 break
+
+    def setX(self,X):
+        self.X=X
+
+    def setY(self,Y):
+        self.Y=Y
 
     @property
     def getX(self):
@@ -79,31 +85,41 @@ class Character:
             return 1
 
     def askfor(self,p1,p2,p3,p4,view):
+        print "estableciendo orden de prioridad"
         op=0
+        aux=0
+        priori=[" "," "," "," "," "]
         #-----------------------------------------------------------------------
-        for opc in range (1,4)
-            if(opc==1):
+        for opc in range (5):
+            print priori
+            if(opc==0):
                 op=p1
-            if(opc==2):
+            if(opc==1):
                 op=p2
-            if(opc==3):
+            if(opc==2):
                 op=p3
-            if(opc==4):
+            if(opc==3):
                 op=p4
-            #-------------------------------------------------------------------
+
             if(op==1):
-                if(view.askLEFT(self.getX/50, self.getY/50) > "0"):
-                    return "left"
+                priori[opc]="left"
+                print "left"
+                if(opc==4):
+                    return priori
             if(op==2):
-                if(view.askUP(self.getX/50, self.getY/50) > "0"):
-                    return "up"
+                priori[opc]="up"
+                print "up"
+                if(opc==4):
+                    return priori
             if(op==3):
-                if(view.askRIGHT(self.getX/50, self.getY/50) > "0"):
-                    return "right"
+                priori[opc]="right"
+                print "right"
+                if(opc==4):
+                    return priori
             if(op==4):
-                if(view.askDOWN(self.getX/50, self.getY/50) > "0"):
-                    return "down"
-            return "false"
+                priori[opc]="down"
+                print "down"
+                if(opc==4):
+                    return priori
 
-
-    #def choice(self):
+            #return "false"
