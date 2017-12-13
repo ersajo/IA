@@ -1,4 +1,5 @@
 import numpy as np
+import matplotlib.pyplot as plt
 
 """
 Representacion:     Se tiene un arreglo de longitud n donde xi es el valor de x
@@ -21,6 +22,56 @@ class Genetico:
         self.generacion.append(np.random.randint(imin, high=imax, size=individuos))
         self.min = imin
         self.max = imax
+        self.ind = individuos
+
+    def plot(self, flag, generaciones):
+        y = []
+        yi = []
+        xi =[]
+        for num in range(self.max):
+            if num == 30 or num == 50 or num == 80:
+                pass
+            else:
+                xi.append(num)
+        color = []
+        if flag == 1:  # x**2
+            for valor in xi:
+                yi.append(valor ** 2)
+        elif flag == 2:  # sinx * 40
+            for valor in xi:
+                yi.append(np.sin(valor) * 40)
+        elif flag == 3:  # cosx + x
+            for valor in xi:
+                yi.append(np.cos(valor) + valor)
+        elif flag == 4:  # (1000/|50-x|)+x
+            for valor in xi:
+                yi.append(((1000 / np.absolute(50 - valor)) + valor))
+        elif flag == 5:  # (1000/|30-x|)+(1000/|50-x|)+(1000/|80-x|)+x
+            for valor in xi:
+                res = (1000 / np.absolute(30 - valor)) + (1000 / np.absolute(50 - valor)) + (1000 / np.absolute(80 - valor)) + valor
+                yi.append(res)
+        plt.plot(xi, yi)
+        for gen in range(generaciones + 1):
+            color.append(np.random.rand(self.ind))
+            y.append([])
+            if flag == 1:  # x**2
+                for valor in self.generacion[gen]:
+                    y[gen].append(valor ** 2)
+            elif flag == 2:  # sinx * 40
+                for valor in self.generacion[gen]:
+                    y[gen].append(np.sin(valor) * 40)
+            elif flag == 3:  # cosx + x
+                for valor in self.generacion[gen]:
+                    y[gen].append(np.cos(valor) + valor)
+            elif flag == 4:  # (1000/|50-x|)+x
+                for valor in self.generacion[gen]:
+                    y[gen].append((1000 / np.absolute(50 - valor) + valor))
+            elif flag == 5:  # (1000/|30-x|)+(1000/|50-x|)+(1000/|80-x|)+x
+                for valor in self.generacion[gen]:
+                    res = (1000 / np.absolute(30 - valor)) + (1000 / np.absolute(50 - valor)) + (1000 / np.absolute(80 - valor)) + valor
+                    y[gen].append(res)
+            plt.scatter(self.generacion[gen], y[gen], c=color[gen], alpha=0.5)
+        plt.show()
 
     def getIndividuos(self,gen):
         return self.generacion[gen]
@@ -37,12 +88,22 @@ class Genetico:
             for valor in self.generacion[gen]:
                 eval.append(np.cos(valor) + valor)
         elif flag == 4:#(1000/|50-x|)+x
+            i = 0
             for valor in self.generacion[gen]:
-                eval.append((1000/np.absolute(50 - valor) + valor))
+                while valor == 50:
+                    valor = np.random.randint(self.min, high=self.max)
+                    self.generacion[gen][i] = valor
+                eval.append(((1000/np.absolute(50 - valor)) + valor))
+                i = i + 1
         elif flag == 5:#(1000/|30-x|)+(1000/|50-x|)+(1000/|80-x|)+x
+            i = 0
             for valor in self.generacion[gen]:
+                while valor == 30 or valor == 50 or valor == 80:
+                    valor = np.random.randint(self.min, high=self.max)
+                    self.generacion[gen][i] = valor
                 res = (1000/np.absolute(30 - valor)) + (1000/np.absolute(50 - valor)) + (1000/np.absolute(80 - valor)) + valor
                 eval.append(res)
+                i = i + 1
         out = []
         i=0
         if objetivo == 0:#Minimizar

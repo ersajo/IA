@@ -59,6 +59,7 @@ class GUI:
             indices = g.eval(self.var.get(), self.variable.get(), j)
             g.cross(indices, i, j)
             print(g.getIndividuos(j))
+        g.plot(self.var.get(),int(self.generaciones.get()))
         print("")
 
     def callback(self):
