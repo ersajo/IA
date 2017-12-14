@@ -24,17 +24,23 @@ view.paintWorld(contenido, 1)
 view.copyWorld(viewX, viewY)
 view.paintWorld(view.getSombra(), 0)
 #------------------------colocando personaje/punto final------------------------
-X = (random.randrange(viewX-1))*50
-Y = (random.randrange(viewY-1))*50
-PosChar = [X,Y]#Inicializacion del la posicion del monito
+#X = (random.randrange(viewX-1))*50
+#Y = (random.randrange(viewY-1))*50
+X=0
+Y=0
+PosChar = [X/50,Y/50]#Inicializacion del la posicion del monito
 PosCharlast = [0,0]#posicion anterior del Character si efectua movimiento
 FinalPoint=[(random.randrange(viewX-1)),(random.randrange(viewY-1))]#Posicion del Punto Final
+PosCharLastNode=[X/50,Y/50]
 monito = Character("Human",X,Y,costos)
+print "inicie en->>"+str(X/50)+","+str(Y/50)
+
 dir=""
 
 #-------------------------definiendo opciones de juego--------------------------
 opc = 2#1 manual , 2 auntomatico -anchura-longitud-
 #-------------------------------------------------------------------------------
+
 def MoveAUTO():
     #------------------Menu-----------------------------------------------------
     pygame.init()
@@ -86,6 +92,7 @@ def MoveAUTO():
                 PosCharlast[0]=monito.getX/50
                 PosCharlast[1]=monito.getY/50
                 monito.LEFT(view.askLEFT(monito.getX/50, monito.getY/50),1)
+                print "me movi a -------------->"+str(monito.getX/50)+","+str(monito.getY/50)
 
         if(dir=="right"):
             print "right"
@@ -93,7 +100,7 @@ def MoveAUTO():
                 PosCharlast[0]=monito.getX/50
                 PosCharlast[1]=monito.getY/50
                 monito.RIGHT(view.askRIGHT(monito.getX/50, monito.getY/50),1)
-
+                print "me movi a -------------->"+str(monito.getX/50)+","+str(monito.getY/50)
 
         if(dir=="up"):
             print "up"
@@ -101,7 +108,7 @@ def MoveAUTO():
                 PosCharlast[0]=monito.getX/50
                 PosCharlast[1]=monito.getY/50
                 monito.UP(view.askUP(monito.getX/50, monito.getY/50),1)
-
+                print "me movi a -------------->"+str(monito.getX/50)+","+str(monito.getY/50)
 
         if(dir=="down"):
             print "down"
@@ -109,51 +116,54 @@ def MoveAUTO():
                 PosCharlast[0]=monito.getX/50
                 PosCharlast[1]=monito.getY/50
                 monito.DOWN(view.askDOWN(monito.getX/50, monito.getY/50),1)
-
+                print "me movi a -------------->"+str(monito.getX/50)+","+str(monito.getY/50)
 
     #------------definiendo nuevas caracteristicas de casilla visitada----------
         #----------comprueba la toma de desiciones------------------------------
-        Decision = 0
-        if(view.askUP(monito.getX/50, monito.getY/50) > "0"):
-            Decision = Decision + 1
-        if(view.askDOWN(monito.getX/50, monito.getY/50) > "0"):
-            Decision = Decision + 1
-        if(view.askRIGHT(monito.getX/50, monito.getY/50) > "0"):
-            Decision = Decision + 1
-        if(view.askLEFT(monito.getX/50, monito.getY/50) > "0"):
-            Decision = Decision + 1
-        print Decision
+        if(view.getSombra()[monito.getY/50][monito.getX/50][3]!="d"):
+            banderadesicion=False
+            Decision = 1
+            if(view.askUP(monito.getX/50, monito.getY/50) > "0"):
+                Decision = Decision + 1
+            if(view.askDOWN(monito.getX/50, monito.getY/50) > "0"):
+                Decision = Decision + 1
+            if(view.askRIGHT(monito.getX/50, monito.getY/50) > "0"):
+                Decision = Decision + 1
+            if(view.askLEFT(monito.getX/50, monito.getY/50) > "0"):
+                Decision = Decision + 1
+            print "EN ->"+str(monito.getX/50)+","+str(monito.getY/50)+"--conte---"+str(Decision)
 
-        if(Decision >1):#--mas de 2 caminos disponibles es acreedor a desicion-
-            d = "d"
-        else:
-            d = 0
-        #re-define la casilla actual como no visitada
-        view.getSombra()[PosCharlast[1]][PosCharlast[0]][4] = 0
-        Visited = "v"
-        Actual = "a"
-        #el en turno cero se definen el punto inicial y final de lo contrario se fijan las caracteristicas de la casilla actual
-        if(monito.getCostoT == 0):
-            Inicio = "f"
-            Shadow =view.getWorld()[FinalPoint[0]/50][FinalPoint[1]/50][0]#pintando casilla final
-            view.getSombra()[FinalPoint[0]][FinalPoint[1]] = [Shadow,Inicio,0,0,0]#definiendo caracteristicas de a casilla final
-            Inicio ="i"
-        else:
-            Inicio = 0
+            if(Decision >2):#--mas de 2 caminos disponibles es acreedor a desicion-
+                d = "d"
+            else:
+                d = 0
+            #re-define la casilla actual como no visitada
+            view.getSombra()[PosCharlast[1]][PosCharlast[0]][4] = 0
+            Visited = "v"
+            Actual = "a"
+            #el en turno cero se definen el punto inicial y final de lo contrario se fijan las caracteristicas de la casilla actual
+            if(monito.getCostoT == 0):
+                Inicio = "f"
+                Shadow =view.getWorld()[FinalPoint[0]/50][FinalPoint[1]/50][0]#pintando casilla final
+                view.getSombra()[FinalPoint[0]][FinalPoint[1]] = [Shadow,Inicio,0,0,0]#definiendo caracteristicas de a casilla final
+                Inicio ="i"
+            else:
+                Inicio = 0
 
-        Shadow =view.getSombra()[monito.getY/50][monito.getX/50][0]#pintando casila actual en mapa visitado
-        view.getSombra()[monito.getY/50][monito.getX/50] = [Shadow,Inicio,Visited,d,Actual]#definiendo caracteristicas de la casilla actual
+            Shadow =view.getSombra()[monito.getY/50][monito.getX/50][0]#pintando casila actual en mapa visitado
+            view.getSombra()[monito.getY/50][monito.getX/50] = [Shadow,Inicio,Visited,d,Actual]#definiendo caracteristicas de la casilla actual
+        else:
+            banderadesicion=True
 
         #---------------------logica para Anchura-----------------------------------
         print "--->>>"+ str(view.getSombra()[monito.getY/50][monito.getX/50][3])
         if (TSearch==1):
-            if(view.getSombra()[monito.getY/50][monito.getX/50][3]=="d"):
-                print str(monito.Tree.elemento)+"->"+str(monito.getX/50)+","+str(monito.getY/50)+"->"+str(PosChar[0]/50)+","+str(PosChar[1]/50)
-                monito.Tree.agregarElemento(monito.Tree,str(monito.getX/50)+","+str(monito.getY/50),str(PosChar[0])+","+str(PosChar[1]))
-                print "soy"+str(monito.getX/50)+","+str(monito.getY/50)+"-mi papa es->"+str(PosChar[0])+","+str(PosChar[1])
-                PosChar[0]=monito.getX/50
-                PosChar[1]=monito.getY/50
-                print monito.Tree.getFather(monito.Tree,str(monito.getX/50)+","+str(monito.getY/50))
+            if(view.getSombra()[monito.getY/50][monito.getX/50][3]=="d" and banderadesicion==False):
+                monito.Tree.agregarElemento(monito.Tree,str(monito.getX/50)+","+str(monito.getY/50),str(PosCharLastNode[0])+","+str(PosCharLastNode[1]))
+                PosCharLastNode[0]=monito.getX/50
+                PosCharLastNode[1]=monito.getY/50
+                print "mi padre es--->>>>"+str(monito.Tree.getFather(monito.Tree,str(monito.getX/50)+","+str(monito.getY/50)))
+
 
         #-------------------logica para longitud------------------------------------
         if (TSearch==2):
@@ -172,7 +182,7 @@ def MoveAUTO():
 
         #--Todos los dibujos van antes de esta linea
         pygame.display.flip()
-        reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
+        reloj.tick(1)  # Limitamos a 20 fotogramas por segundo
     pygame.quit()
 
 #------------------------------------------------------------------------------

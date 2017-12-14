@@ -13,7 +13,8 @@ class Character:
         self.tipo = tipo
         self.X = X
         self.Y = Y
-        Tree=Arbol(str(X)+","+str(Y),str(X)+","+str(Y))
+        self.Tree=Arbol(str(self.X/50)+","+str(self.Y/50),str(self.X/50)+","+str(self.Y/50))
+
         for i in range(len(costos)):
             if costos[i][0] == tipo:
                 self.costos = costos[i]
@@ -24,6 +25,9 @@ class Character:
 
     def setY(self,Y):
         self.Y=Y
+
+    def setArbol(self):
+        Tree=Arbol(str(self.X)+","+str(self.Y),str(self.X)+","+str(self.Y))
 
     @property
     def getX(self):
