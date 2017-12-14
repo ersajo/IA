@@ -182,7 +182,7 @@ def MoveAUTO():
 
         #--Todos los dibujos van antes de esta linea
         pygame.display.flip()
-        reloj.tick(1)  # Limitamos a 20 fotogramas por segundo
+        reloj.tick(10)  # Limitamos a 20 fotogramas por segundo
     pygame.quit()
 
 #------------------------------------------------------------------------------

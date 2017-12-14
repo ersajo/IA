@@ -1,12 +1,14 @@
 from collections import deque
 
 class Arbol:
-    def __init__(self, elemento, padre):
+    def __init__(self, elemento, padre, hoja ,profundidad):
         self.hijos = []
         self.elemento = elemento
         self.padre = padre
+        self.hoja = hoja
+        self.profundidad = profundidad
 
-    def agregarElemento(self, arbol, elemento, elementoPadre):
+    def agregarElemento(self, arbol, elemento, elementoPadre,hoja,profundidad):
         subarbol = self.buscarSubarbol(arbol, elementoPadre)
         subarbol.hijos.append(Arbol(elemento,elementoPadre))
 
