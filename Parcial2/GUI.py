@@ -6,7 +6,7 @@ class GUI:
     def __init__(self):
         self.master = Tk()
         self.master.geometry('400x170')
-        self.master.title("Algoritmos Geneticos")
+        self.master.title("Algoritmos Geneticos: Practica 1")
 
         MODES = [
             ("Funcion1", 1),

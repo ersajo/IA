@@ -10,8 +10,8 @@ Cruzamiento:        Se transformara el valor xi en una cadena binaria representa
                     cruzamiento de un punto aleatorio se procedera a seleccionar los hijos aptos a sobrevivir de
                     acuerdo con las restricciones; Si al realizar los cruzamientos, no se generan los hijos suficientes
                     se introduce "sangre nueva"
-Mutacion:           Se realizara una mutacion en un bit aleatorio en un generacion aleatoria dentro de las establecidas
-                    por el usuario, donde el bit seleccionado sera seteado a su inverso
+Mutacion:           Se realizara una mutacion en un bit aleatorio en un individuo aleatorio en una generacion aleatoria 
+                    dentro de las establecidas por el usuario, donde el bit seleccionado sera seteado a su inverso
 Restricciones:      *Los individuos en cada generacion tienen que estar dentro del intervalo X 
                     *Si se detecta una division por 0 se introduce sangre nueva
 """
@@ -51,7 +51,7 @@ class Genetico:
             for valor in xi:
                 res = (1000 / np.absolute(30 - valor)) + (1000 / np.absolute(50 - valor)) + (1000 / np.absolute(80 - valor)) + valor
                 yi.append(res)
-        plt.plot(xi, yi)
+        plt.plot(xi, yi, alpha = 0.3)
         for gen in range(generaciones + 1):
             color.append(np.random.rand(self.ind))
             y.append([])
